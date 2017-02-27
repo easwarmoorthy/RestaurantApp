@@ -48,6 +48,7 @@ def view_res(request):
     return render(request,"resapp/home.html",context)
 
 def search_view(request):
+    print request
     form = SearchForm(request.POST or None)
     if form.is_valid():
         keyword = form.cleaned_data.get("keyword")
