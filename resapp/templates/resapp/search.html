@@ -1,0 +1,14 @@
+{% block content %}
+<title> Restaurant </title>
+<form method="post" action=""> {% csrf_token %}
+{{form}}
+{% if form != None %}
+<input type="submit">  </input>
+{% endif %}
+</form>
+{% for x in list2 %}
+<a href="{{x.url}}">{{x.name}}</a>
+<p> {{x.city}} </p>
+<p> {{x.address}}</p> {% endfor %}
+{{user}}
+ {% endblock content%}
