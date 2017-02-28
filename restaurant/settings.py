@@ -65,7 +65,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.user.user_details',
     'resapp.views.save_profile',
 )
-
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 ROOT_URLCONF = 'restaurant.urls'
 
 TEMPLATES = [
@@ -158,3 +158,7 @@ SOCIAL_AUTH_TWITTER_SECRET = 'wDasvGkPtRIKi75zYSUDHRcjRRj2a8U3xID0A9szYJxPVq4K8y
 LOGIN_REDIRECT_URL = "/search/"
 TWITTER_TOKEN = 'Ksvy8kHOMECf9JLvHNPVhSRAw'
 TWITTER_SECRET = 'wDasvGkPtRIKi75zYSUDHRcjRRj2a8U3xID0A9szYJxPVq4K8y'
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = '/home'

@@ -1,5 +1,6 @@
 {% block content %}
 <title> Restaurant </title>
+<p>{{user.username}}</p>
 <form method="post" action=""> {% csrf_token %}
 {% for x in list1 %}
 <a href="{{x.url}}">{{x.name}}</a>

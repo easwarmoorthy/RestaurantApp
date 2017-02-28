@@ -14,11 +14,10 @@ from django.contrib.auth.decorators import login_required
 from social.apps.django_app.default.models import UserSocialAuth
 from .models import UserProfile
 
-
 def save_profile(backend, user, response, *args, **kwargs):
     users = UserProfile.objects.values('user__username')
     username = []
-    print user
+    print dir(user) , user.get_username(), user.is_active , user.is_authenticated()
     for x in users:
         username.append(str(x['user__username']))
     k = str(user)
@@ -27,28 +26,63 @@ def save_profile(backend, user, response, *args, **kwargs):
     else:
         UserProfile.objects.create(user=user)
 
+
 def view_res(request):
-    user = UserProfile.objects.get(user__id = 1)
-    list1 = RestaurantModel.objects.all()
-    list2 =  []
-    for k in user.restaurant.all():
-        list2.append(k.id)
-    if request.method == 'POST':
-        interested = request.POST.getlist('checks[]')
-        print interested
-        for x in interested:
-            qwe = RestaurantModel.objects.get(id = x)
-            user.restaurant.add(qwe)
+    user = None
+    print request
+    if request.user.is_authenticated():
+        print "first"
+        u = request.user
+        #print type(u)
+        user =  UserProfile.objects.get(user = u)
+        #print type(user) , dir(user)
+        #profile_name_search = UserProfile.objects.get(user = user)
+        #user = UserProfile.objects.filter(user=profile_name_search.user.pk)
+
+        print  user
+        list1 = RestaurantModel.objects.all()
         list2 =  []
-        for k in user.restaurant.all():
-            list2.append(k.id)
+        if user is not None:
+            for k in user.restaurant.all():
+                list2.append(k.id)
+            if request.method == 'POST':
+                interested = request.POST.getlist('checks[]')
+                print interested
+                user.restaurant.clear()
+                for x in interested:
+                    qwe = RestaurantModel.objects.get(id = x)
+                    user.restaurant.add(qwe)
+                list2 =  []
+                for k in user.restaurant.all():
+                    list2.append(k.id)
+                context = {"list1":list1,"list2":list2}
+                return render(request,"resapp/home.html",context)
         context = {"list1":list1,"list2":list2}
         return render(request,"resapp/home.html",context)
-    context = {"list1":list1,"list2":list2}
-    return render(request,"resapp/home.html",context)
+    else:
+        #request.session['member']
+        print "second"
+        list1 = RestaurantModel.objects.all()
+        list2 =  []
+        if user is not None:
+            for k in user.restaurant.all():
+                list2.append(k.id)
+            if request.method == 'POST':
+                interested = request.POST.getlist('checks[]')
+                print interested
+                for x in interested:
+                    qwe = RestaurantModel.objects.get(id = x)
+                    user.restaurant.add(qwe)
+                list2 =  []
+                for k in user.restaurant.all():
+                    list2.append(k.id)
+                context = {"list1":list1,"list2":list2}
+                return render(request,"resapp/home.html",context)
+        context = {"list1":list1,"list2":list2}
+        return render(request,"resapp/home.html",context)
 
 def search_view(request):
-    print request
+    print user
     form = SearchForm(request.POST or None)
     if form.is_valid():
         keyword = form.cleaned_data.get("keyword")
