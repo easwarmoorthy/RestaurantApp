@@ -1,5 +1,6 @@
 {% block content %}
 <title> Restaurant </title>
+<p> {{info}} </p>
 <p>{{user.username}}</p>
 <form method="post" action=""> {% csrf_token %}
 {% for x in list1 %}

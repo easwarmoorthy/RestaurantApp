@@ -64,6 +64,10 @@ def view_res(request):
         print "second"
         list1 = RestaurantModel.objects.all()
         list2 =  []
+        if request.method == 'POST':
+            info = "Please Login"
+            context = {"list1":list1,"list2":list2 , "info":info}
+            return render(request,"resapp/home.html",context)
         if user is not None:
             for k in user.restaurant.all():
                 list2.append(k.id)
