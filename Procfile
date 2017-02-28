@@ -1,1 +1,1 @@
-web : gunicorn restaurant.wsgi -b 0.0.0.0:$PORT
+ web: gunicorn restaurant.wsgi --log-file -
