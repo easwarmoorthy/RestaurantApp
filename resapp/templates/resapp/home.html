@@ -1,16 +1,21 @@
 {% block content %}
+<link rel="stylesheet" type="text/css" href="/static/resapp/style.css" />
 <title> Restaurant </title>
 <p> {{info}} </p>
-<p>{{user.username}}</p>
+<p>User {{user.username}}</p>
 <form method="post" action=""> {% csrf_token %}
 {% for x in list1 %}
+<div class="cbox">
 <a href="{{x.url}}">{{x.name}}</a>
 {% if x.id in list2 %}
-<label><input type="checkbox" name="checks[]" id="{{x.id}}" checked="on" value="{{x.id}}"> Interested </label><br>
+<input type="checkbox" name="checks[]" id="{{x.id}}" checked="on" value="{{x.id}}">
+<label for="{{x.id}}">Interested</label>
 {% else %}
-<label><input type="checkbox" name="checks[]" id="{{x.id}}"  value="{{x.id}}"> Interested </label><br>
+<input type="checkbox" name="checks[]" id="{{x.id}}"  value="{{x.id}}">
+<label for="{{x.id}}">Interested</label>
 {% endif %}
 <p> {{x.address}}</p> {% endfor %}
+</div>
 <input type="submit"/>
 </form>
 <a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a>
