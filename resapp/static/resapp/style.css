@@ -59,3 +59,15 @@ label::before {
   -o-transition: .25s all ease;
   transition: .25s all ease;
 }
+hr
+{
+  margin: 0 auto;
+  width: 500px;
+  border-style: dashed;
+}
+.cbox
+{
+  margin: 0 auto;
+  width: 500px;
+  margin-top: 20px;
+}

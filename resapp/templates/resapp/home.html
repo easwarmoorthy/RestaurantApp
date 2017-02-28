@@ -14,9 +14,14 @@
 <input type="checkbox" name="checks[]" id="{{x.id}}"  value="{{x.id}}">
 <label for="{{x.id}}">Interested</label>
 {% endif %}
-<p> {{x.address}}</p> {% endfor %}
+<p> {{x.address}}</p>
 </div>
+<hr>
+{% endfor %}
+<div class="cbox">
 <input type="submit"/>
 </form>
+<br><br>
 <a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a>
+</div>
  {% endblock content%}
