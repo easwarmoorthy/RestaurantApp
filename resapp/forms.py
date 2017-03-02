@@ -5,7 +5,7 @@ class SearchForm(forms.Form):
     keyword = forms.CharField()
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
-        self.fields['keyword'].label = "Search by City"
+        self.fields['keyword'].label = "Search by Restaurant Name"
 
 class MyForm(forms.Form):
     my_field = forms.BooleanField(initial=False)

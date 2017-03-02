@@ -89,7 +89,7 @@ def search_view(request):
     form = SearchForm(request.POST or None)
     if form.is_valid():
         keyword = form.cleaned_data.get("keyword")
-        list2 = RestaurantModel.objects.all().filter(city__contains = keyword)
+        list2 = RestaurantModel.objects.all().filter(name__contains = keyword)
         context = {"list2":list2}
         return render(request,"resapp/search.html",context)
     else:
