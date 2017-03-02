@@ -1,0 +1,9 @@
+curl --header "X-Zomato-API-Key:7749b19667964b87a3efc739e254ada2" "https://api.zomato.com/v1/search.json?city_id=1"
+
+curl -X GET --header "Accept: application/json" --header "user-key:" "https://developers.zomato.com/api/v2.1/restaurant?res_id=ccd"
+
+
+curl -X GET --header "Accept: application/json" --header "user-key: 6aebfe02b9c7820ae965ccf5769fea39" "https://developers.zomato.com/api/v2.1/restaurant?res_id=1"
+
+Consumer Key (API Key)	FWT9xMkLEO5Z1YzeN1JPTySYB
+Consumer Secret (API Secret)	XYDMz5u962gzdCaZARSCyxwgqMq3YT2guSLO0KZPTz0nXuLPJz

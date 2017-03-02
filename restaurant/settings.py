@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+                                                                                                                                                     
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-import django.core.handlers.wsgi
-application = django.core.handlers.wsgi.WSGIHandler()
+#export DJANGO_SETTINGS_MODULE = restaurant.settings
+#heroku config:set DJANGO_SETTINGS_MODULE=restaurant.settings --account personal
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -66,7 +67,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.user.user_details',
     'resapp.views.save_profile',
 )
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
 ROOT_URLCONF = 'restaurant.urls'
 
 TEMPLATES = [
@@ -162,4 +163,4 @@ TWITTER_SECRET = 'wDasvGkPtRIKi75zYSUDHRcjRRj2a8U3xID0A9szYJxPVq4K8y'
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/home/'
