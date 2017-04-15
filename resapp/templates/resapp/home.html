@@ -1,27 +1,64 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="/static/resapp/style.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title> Restaurant </title>
-<p> {{info}} </p>
-<p>User {{user.username}}</p>
+<div class="top">
+<h1>Restaurants</h1>
+<h2>{{user.username}}</h2>
+{% if not user.username %}
+  <div class="right">
+    <a href="{% url 'social:begin' 'twitter' %}"><h2>Login with Twitter</h2></a>
+  </div>
+{%endif%}
+</div>
+{% if info %}
+<div class="alert alert-success" role="alert">
+  <a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a>
+</div>
+{% endif %}
+  <div class="bottom">
 <form method="post" action=""> {% csrf_token %}
 {% for x in list1 %}
+{% if x.id in list2 %}
 <div class="cbox">
 <a href="{{x.url}}">{{x.name}}</a>
-{% if x.id in list2 %}
 <input type="checkbox" name="checks[]" id="{{x.id}}" checked="on" value="{{x.id}}">
 <label for="{{x.id}}">Interested</label>
-{% else %}
-<input type="checkbox" name="checks[]" id="{{x.id}}"  value="{{x.id}}">
-<label for="{{x.id}}">Interested</label>
-{% endif %}
 <p> {{x.address}}</p>
 </div>
-<hr>
-{% endfor %}
+{% else %}
 <div class="cbox">
-<input type="submit"/>
-</form>
-<br><br>
-<a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a>
+<a href="{{x.url}}">{{x.name}}</a>
+<input type="checkbox" name="checks[]" id="{{x.id}}"  value="{{x.id}}">
+<label for="{{x.id}}">Interested</label>
+<p> {{x.address}}</p>
 </div>
+{% endif %}
+{% endfor %}
+</div>
+<div class="box">
+  <input class="btn btn-primary" type="submit" value="Submit"/>
+</form>
+
+</div>
+<div class="box">
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% if list1.has_previous %}
+    <li class="page-item"><a href="?page={{ list1.previous_page_number }}">Previous</a></li>
+            {% endif %}
+    <li class="page-item"><span class="current">
+        Page {{ list1.number }} of {{ list1.paginator.num_pages }}.
+    </span></li>
+
+    {% if list1.has_next %}
+        <li class="page-item"><a href="?page={{ list1.next_page_number }}">Next</a></li>
+    {% endif %}
+  </ul>
+</nav>
+</div>
+</div>
+
  {% endblock content%}

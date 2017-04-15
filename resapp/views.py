@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from forms import *
 import oauth2 as oauth
 import cgi
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -38,10 +40,19 @@ def view_res(request):
         #print type(user) , dir(user)
         #profile_name_search = UserProfile.objects.get(user = user)
         #user = UserProfile.objects.filter(user=profile_name_search.user.pk)
-
         print  user
-        list1 = RestaurantModel.objects.all()
+        res_list = RestaurantModel.objects.all()
+        paginator = Paginator(res_list, 10) # Show 25 contacts per page
+        page = request.GET.get('page')
         list2 =  []
+        try:
+            list1 = paginator.page(page)
+        except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+            list1 = paginator.page(1)
+        except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+            list1= paginator.page(paginator.num_pages)
         if user is not None:
             for k in user.restaurant.all():
                 list2.append(k.id)
@@ -62,10 +73,22 @@ def view_res(request):
     else:
         #request.session['member']
         print "second"
-        list1 = RestaurantModel.objects.all()
+        #list1 = RestaurantModel.objects.all()
+        res_list = RestaurantModel.objects.all()
+        paginator = Paginator(res_list, 10) # Show 25 contacts per page
+        page = request.GET.get('page')
+        list2 =  []
+        try:
+            list1 = paginator.page(page)
+        except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+            list1 = paginator.page(1)
+        except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+            list1= paginator.page(paginator.num_pages)
         list2 =  []
         if request.method == 'POST':
-            info = "Please Login"
+            info = "Login using Twitter!!!"
             context = {"list1":list1,"list2":list2 , "info":info}
             return render(request,"resapp/home.html",context)
         if user is not None:
@@ -89,7 +112,7 @@ def search_view(request):
     form = SearchForm(request.POST or None)
     if form.is_valid():
         keyword = form.cleaned_data.get("keyword")
-        list2 = RestaurantModel.objects.all().filter(name__contains = keyword)
+        list2 = RestaurantModel.objects.all().filter(city__contains = keyword)
         context = {"list2":list2}
         return render(request,"resapp/search.html",context)
     else:
